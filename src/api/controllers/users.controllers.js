@@ -12,7 +12,7 @@ const register = async (req, res, next) => {
             return next();
         }
         if(!validationPassword(req.body.password)){
-            console.log({code: 403, message: "Invalid password"})
+            res.status(403).send({code: 403, message: "Invalid password"});
             return next();
         }
         newUser.password = bcrypt.hashSync(newUser.password, 10);
@@ -25,7 +25,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-        //console.log(req.headers.authorization)
+        console.log(req.headers.authorization)
         const userInfo = await User.findOne({email: req.body.email});
         if(!userInfo){
             return res.status(404).json("Not Found Email")
@@ -50,10 +50,40 @@ const login = async (req, res, next) => {
 
 const logout = (req, res, next) => {
     try {
-        return res.status(200).json({token: null})
+        return res.status(200).json({token: null})//????de donde se recoge token???
     } catch (error) {
         return res.status(500).json(error) ;
     }
 };
 
-module.exports = {register, login, logout}
+const getAllUsers = async (req, res, next) => {
+    try {
+        const allUsers = await User.find()
+        return res.status(200).json(allUsers)
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const {id} = req.params;
+        const user = await User.findByIdAndDelete(id);
+        return res.status(200).json("User deleted")
+    } catch (error) {
+        return res.status(500).json(error)
+    }
+}
+
+const deleteAllUsers = async (req, res, next) => {
+    try {
+        await User.collection.drop();
+        return res.status(200).json("Deleted all users!")
+    } catch (error) {
+       return res.staus(500).json(error) 
+    }
+}
+
+
+
+module.exports = {register, login, logout, getAllUsers, deleteUser, deleteAllUsers}

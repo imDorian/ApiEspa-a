@@ -1,7 +1,10 @@
 
 const mongoose = require("mongoose");
 
-const DB_URL = 'mongodb+srv://root:root@cluster0.54md9ja.mongodb.net/project?retryWrites=true&w=majority'
+const dotenv = require("dotenv");
+dotenv.config();
+
+const DB_URL = process.env.MONGO_DB;
 
 const connect = async () => {
   try {
