@@ -3,7 +3,7 @@ const {getAllPaises, postPais, putPais, deletePais} = require('../controllers/pa
 const router = express.Router();
 const {isAuth} = require('../../middlewares/auth');
 
-router.get('/',[isAuth], getAllPaises);
+router.get('/', getAllPaises);
 router.post('/',[isAuth],postPais);
 router.put('/:id',[isAuth],putPais);
 router.delete('/:id',[isAuth],deletePais);

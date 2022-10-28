@@ -2,7 +2,7 @@ const Pais = require('../model/pais.model');
 
 const getAllPaises = async (req, res, next) => {
     try {
-        const paises = await Pais.find().populate("comunidades");
+        const paises = await Pais.find() //.populate("comunidades");
         return res.status(200).json(paises);
     } catch (error) {
         return res.status(500).json(error) ;

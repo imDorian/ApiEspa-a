@@ -5,9 +5,9 @@ const {isAuth} = require('../../middlewares/auth');
 
 router.post('/register', register)
 router.post('/login', login)
-router.post('/logout', logout)
-router.delete('/removeusers' ,deleteAllUsers)
+router.post('/logout',[isAuth], logout)
+router.delete('/removeusers',[isAuth] ,deleteAllUsers)
 router.get('/', getAllUsers)
-router.delete('/deleteuser/:id', deleteUser)
+router.delete('/deleteuser/:id',[isAuth], deleteUser)
 
 module.exports = router;
